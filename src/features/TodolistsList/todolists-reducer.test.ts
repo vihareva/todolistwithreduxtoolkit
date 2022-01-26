@@ -1,8 +1,11 @@
 import {
-    addTodolistAC, changeTodolistEntityStatusAC,
+    addTodolist,
+    changeTodolistEntityStatusAC,
     changeTodolistFilterAC,
-    changeTodolistTitleAC, FilterValuesType,
-    removeTodolistAC, setTodolistsAC, TodolistDomainType,
+    changeTodolistTitle,
+    fetchTodolists,
+    FilterValuesType, removeTodolist,
+    TodolistDomainType,
     todolistsReducer
 } from './todolists-reducer'
 import {v1} from 'uuid'
@@ -23,7 +26,7 @@ beforeEach(() => {
 })
 
 test('correct todolist should be removed', () => {
-    const endState = todolistsReducer(startState, removeTodolistAC({id:todolistId1}))
+    const endState = todolistsReducer(startState, removeTodolist.fulfilled({id:todolistId1},'requestId',todolistId1))
 
     expect(endState.length).toBe(1)
     expect(endState[0].id).toBe(todolistId2)
@@ -37,8 +40,7 @@ test('correct todolist should be added', () => {
         order: 0
     }
 
-    const endState = todolistsReducer(startState, addTodolistAC({todolist}))
-
+    const endState = todolistsReducer(startState, addTodolist.fulfilled({todolist},'requestId',todolist.title))
     expect(endState.length).toBe(3)
     expect(endState[0].title).toBe(todolist.title)
     expect(endState[0].filter).toBe('all')
@@ -47,7 +49,7 @@ test('correct todolist should be added', () => {
 test('correct todolist should change its name', () => {
     let newTodolistTitle = 'New Todolist'
 
-    const action = changeTodolistTitleAC({id:todolistId2,title: newTodolistTitle})
+    const action = changeTodolistTitle.fulfilled({id:todolistId2,title: newTodolistTitle},'requestId',{id:todolistId2,title: newTodolistTitle})
 
     const endState = todolistsReducer(startState, action)
 
@@ -67,8 +69,7 @@ test('correct filter of todolist should be changed', () => {
 })
 test('todolists should be added', () => {
 
-    const action = setTodolistsAC({todolists:startState})
-
+    const action = fetchTodolists.fulfilled({todolists:startState},'requestId')
     const endState = todolistsReducer([], action)
 
     expect(endState.length).toBe(2)
