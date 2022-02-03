@@ -66,12 +66,13 @@ export const Login = () => {
                                                         target={'_blank'}>here</a>
                         </p>
                         <p>
-                            or use common test account credentials:
-                        </p>
-                        <p> Email: free@samuraijs.com
+                            or use my account credentials:
                         </p>
                         <p>
-                            Password: free
+                            Email: viharevakatia@gmail.com
+                        </p>
+                        <p>
+                            Password: qwerty123
                         </p>
                     </FormLabel>
                     <FormGroup>
